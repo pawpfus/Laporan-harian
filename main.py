@@ -57,3 +57,21 @@ def tambah_laporan(laporan: Laporan):
 @app.get("/laporan")
 def lihat_laporan():
     return baca_data()
+
+@app.get("/rekap")
+def rekap():
+
+    data = baca_data()
+
+    hasil = {}
+
+    for item in data:
+
+        kegiatan = item["kegiatan"]
+
+        if kegiatan not in hasil:
+            hasil[kegiatan] = 0
+
+        hasil[kegiatan] += item["luas"]
+
+    return hasil

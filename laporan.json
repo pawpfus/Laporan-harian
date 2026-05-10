@@ -1,0 +1,29 @@
+[
+    {
+        "tanggal": "2026-05-10",
+        "desa": "otting",
+        "kelompok_tani": "sipakainge",
+        "kegiatan": "tanam",
+        "komoditas": "padi",
+        "luas": 2.0,
+        "user": "fachru"
+    },
+    {
+        "tanggal": "2026-05-10",
+        "desa": "otting",
+        "kelompok_tani": "sipakainge",
+        "kegiatan": "tanam",
+        "komoditas": "padi",
+        "luas": 2.0,
+        "user": "fachru"
+    },
+    {
+        "tanggal": "2026-05-10",
+        "desa": "Otting",
+        "kelompok_tani": "Massappa",
+        "kegiatan": "Tanam",
+        "komoditas": "Padi",
+        "luas": 0.5,
+        "user": "Fachru"
+    }
+]

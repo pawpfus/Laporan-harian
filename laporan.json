@@ -25,5 +25,14 @@
         "komoditas": "Padi",
         "luas": 0.5,
         "user": "Fachru"
+    },
+    {
+        "tanggal": "2026-05-10",
+        "desa": "Massappa",
+        "kelompok_tani": "Fachru",
+        "kegiatan": "Bera",
+        "komoditas": "Padi",
+        "luas": 0.8,
+        "user": "Fachru"
     }
 ]

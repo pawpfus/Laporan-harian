@@ -95,21 +95,3 @@ if data:
     st.dataframe(df)
 else:
     st.info("Belum ada data")
-
-st.subheader("📋 Data Laporan")
-
-response = requests.get(
-    "http://127.0.0.1:8000/laporan"
-)
-
-if response.status_code == 200:
-    data = response.json()
-    st.dataframe(data)
-
-st.subheader("📊 Rekap Luas")
-
-rekap = requests.get(
-    "http://127.0.0.1:8000/rekap"
-).json()
-
-st.json(rekap)

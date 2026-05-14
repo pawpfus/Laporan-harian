@@ -138,16 +138,6 @@ if data:
         use_container_width=True
     )
 
-    # download excel
-    excel = df.to_csv(index=False).encode("utf-8")
-
-    st.download_button(
-        label="⬇ Download Data CSV",
-        data=excel,
-        file_name="laporan_pertanian.csv",
-        mime="text/csv"
-    )
-
     # hapus data
     if st.button("🗑 Hapus Semua Data"):
 

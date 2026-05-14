@@ -117,8 +117,6 @@ if submit:
 
 st.subheader("📋 Data Laporan")
 
-st.subheader("📋 Data Laporan")
-
 data = baca_data()
 
 if data:

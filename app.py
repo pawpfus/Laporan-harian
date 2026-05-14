@@ -6,22 +6,32 @@ from datetime import date
 
 FILE_DATA = "laporan.json"
 
-# buat file json jika belum ada
+# =========================
+# FUNGSI
+# =========================
+
+# buat file jika belum ada
 if not os.path.exists(FILE_DATA):
     with open(FILE_DATA, "w") as f:
         json.dump([], f)
 
 # baca data
 def baca_data():
-    with open(FILE_DATA, "r") as f:
-        return json.load(f)
+    try:
+        with open(FILE_DATA, "r") as f:
+            return json.load(f)
+    except:
+        return []
 
 # simpan data
 def simpan_data(data):
     with open(FILE_DATA, "w") as f:
         json.dump(data, f, indent=4)
 
-# halaman
+# =========================
+# HALAMAN
+# =========================
+
 st.set_page_config(
     page_title="Pelaporan Pertanian",
     page_icon="🌾",
@@ -30,79 +40,122 @@ st.set_page_config(
 
 st.title("🌾 Pelaporan Pertanian")
 
-st.write("Input laporan harian")
+st.write("Input laporan harian pertanian")
 
-# form input
-tanggal = st.date_input("Tanggal", date.today())
+# =========================
+# FORM INPUT
+# =========================
 
-desa = st.text_input("Desa")
+with st.form("form_laporan"):
 
-kelompok_tani = st.text_input("Kelompok Tani")
+    tanggal = st.date_input("Tanggal", date.today())
 
-jenis_LTT = st.selectbox(
-    "Jenis LTT",
-    [
-        "Reguler",
-        "Oplah Rawa",
-        "Oplah Non Rawa",
-        "CSR"
-    ]
-)
+    desa = st.text_input("Desa")
 
-kegiatan = st.selectbox(
-    "Kegiatan",
-    [
-        "Bera",
-        "Olah Lahan",
-        "Tanam",
-        "Panen"
-    ]
-)
+    kelompok_tani = st.text_input("Kelompok Tani")
 
-komoditas = st.selectbox(
-    "Komoditas",
-    [
-        "Padi",
-        "Jagung",
-        "Kedelai"
-    ]
-)
+    jenis_LTT = st.selectbox(
+        "Jenis LTT",
+        [
+            "Reguler",
+            "Oplah Rawa",
+            "Oplah Non Rawa",
+            "CSR"
+        ]
+    )
 
-luas = st.number_input(
-    "Luas (Ha)",
-    min_value=0.0,
-    step=0.1
-)
+    kegiatan = st.selectbox(
+        "Kegiatan",
+        [
+            "Bera",
+            "Olah Lahan",
+            "Tanam",
+            "Panen"
+        ]
+    )
 
-user = st.text_input("Nama User")
+    komoditas = st.selectbox(
+        "Komoditas",
+        [
+            "Padi",
+            "Jagung",
+            "Kedelai"
+        ]
+    )
 
-# simpan
-if st.button("💾 Simpan"):
+    luas = st.number_input(
+        "Luas (Ha)",
+        min_value=0.0,
+        step=0.1
+    )
 
-    data = baca_data()
+    user = st.text_input("Nama User")
 
-    data.append({
-        "tanggal": str(tanggal),
-        "desa": desa,
-        "kelompok_tani": kelompok_tani,
-        "jenis_LTT": jenis_LTT,
-        "kegiatan": kegiatan,
-        "komoditas": komoditas,
-        "luas": luas,
-        "user": user
-    })
+    submit = st.form_submit_button("💾 Simpan")
 
-    simpan_data(data)
+# =========================
+# SIMPAN DATA
+# =========================
 
-    st.success("Laporan berhasil disimpan")
+if submit:
 
-# tampil data
+    # validasi
+    if desa == "" or kelompok_tani == "" or user == "":
+        st.warning("Semua data wajib diisi")
+    else:
+
+        data = baca_data()
+
+        data.append({
+            "tanggal": str(tanggal),
+            "desa": desa,
+            "kelompok_tani": kelompok_tani,
+            "jenis_LTT": jenis_LTT,
+            "kegiatan": kegiatan,
+            "komoditas": komoditas,
+            "luas": luas,
+            "user": user
+        })
+
+        simpan_data(data)
+
+        st.success("Laporan berhasil disimpan")
+
+# =========================
+# TAMPIL DATA
+# =========================
+
 st.subheader("📋 Data Laporan")
 
 data = baca_data()
 
 if data:
+
     df = pd.DataFrame(data)
-    st.dataframe(df)
+
+    st.dataframe(
+        df,
+        use_container_width=True
+    )
+
+    # download excel
+    excel = df.to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+        label="⬇ Download Data CSV",
+        data=excel,
+        file_name="laporan_pertanian.csv",
+        mime="text/csv"
+    )
+
+    # hapus data
+    if st.button("🗑 Hapus Semua Data"):
+
+        simpan_data([])
+
+        st.success("Semua data berhasil dihapus")
+
+        st.rerun()
+
 else:
     st.info("Belum ada data")

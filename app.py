@@ -39,6 +39,16 @@ desa = st.text_input("Desa")
 
 kelompok_tani = st.text_input("Kelompok Tani")
 
+jenis_LTT = st.selectbox(
+    "Jenis LTT",
+    [
+        "Reguler",
+        "Oplah Rawa",
+        "Oplah Non Rawa",
+        "CSR"
+    ]
+)
+
 kegiatan = st.selectbox(
     "Kegiatan",
     [
@@ -75,6 +85,7 @@ if st.button("💾 Simpan"):
         "tanggal": str(tanggal),
         "desa": desa,
         "kelompok_tani": kelompok_tani,
+        "jenis_LTT": jenis_LTT,
         "kegiatan": kegiatan,
         "komoditas": komoditas,
         "luas": luas,

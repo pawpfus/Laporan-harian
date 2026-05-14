@@ -6,9 +6,7 @@ from datetime import date
 
 FILE_DATA = "laporan.json"
 
-# =========================
 # FUNGSI
-# =========================
 
 # buat file jika belum ada
 if not os.path.exists(FILE_DATA):
@@ -28,9 +26,7 @@ def simpan_data(data):
     with open(FILE_DATA, "w") as f:
         json.dump(data, f, indent=4)
 
-# =========================
 # HALAMAN
-# =========================
 
 st.set_page_config(
     page_title="Pelaporan Pertanian",
@@ -42,9 +38,7 @@ st.title("🌾 Pelaporan Pertanian")
 
 st.write("Input laporan harian pertanian")
 
-# =========================
 # FORM INPUT
-# =========================
 
 with st.form("form_laporan"):
 
@@ -93,9 +87,7 @@ with st.form("form_laporan"):
 
     submit = st.form_submit_button("💾 Simpan")
 
-# =========================
 # SIMPAN DATA
-# =========================
 
 if submit:
 
@@ -121,9 +113,7 @@ if submit:
 
         st.success("Laporan berhasil disimpan")
 
-# =========================
 # TAMPIL DATA
-# =========================
 
 st.subheader("📋 Data Laporan")
 
@@ -134,18 +124,30 @@ if data:
     df = pd.DataFrame(data)
 
     st.dataframe(
-        df,
-        use_container_width=True
-    )
+    df,
+    use_container_width=True
+)
 
-    # hapus data
-    if st.button("🗑 Hapus Semua Data"):
+# HAPUS DATA SPESIFIK
 
-        simpan_data([])
+st.subheader("🗑 Hapus Data")
 
-        st.success("Semua data berhasil dihapus")
+hapus_index = st.number_input(
+    "Masukkan nomor index data yang ingin dihapus",
+    min_value=0,
+    max_value=len(df)-1,
+    step=1
+)
 
-        st.rerun()
+if st.button("Hapus Data Terpilih"):
+
+    data.pop(hapus_index)
+
+    simpan_data(data)
+
+    st.success("Data berhasil dihapus")
+
+    st.rerun()
 
 else:
     st.info("Belum ada data")

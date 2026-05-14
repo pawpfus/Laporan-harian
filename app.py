@@ -36,7 +36,7 @@ st.set_page_config(
 
 st.title("🌾 Pelaporan Pertanian")
 
-st.write("Input laporan harian pertanian")
+st.write("Input laporan harian")
 
 # FORM INPUT
 

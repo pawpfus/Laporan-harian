@@ -124,39 +124,42 @@ if data:
 
     df = pd.DataFrame(data)
 
-    st.dataframe(df, use_container_width=True)
+    # tambah kolom hapus
+    df["Hapus"] = False
 
-    st.divider()
+    # editor tabel
+    edited_df = st.data_editor(
+        df,
+        use_container_width=True,
+        num_rows="dynamic"
+    )
 
-    st.subheader("🗑 Hapus Data")
+    # tombol proses hapus
+    if st.button("🗑 Hapus Data Terpilih"):
 
-    # tampil tiap data + tombol hapus
-    for i, row in df.iterrows():
+        # ambil data yang tidak dicentang
+        df_baru = edited_df[edited_df["Hapus"] == False]
 
-        col1, col2 = st.columns([8, 1])
+        # hapus kolom bantu
+        df_baru = df_baru.drop(columns=["Hapus"])
 
-        with col1:
-            st.write(
-                f"""
-                **{i}** | 
-                {row['tanggal']} | 
-                {row['desa']} | 
-                {row['kelompok_tani']} | 
-                {row['kegiatan']} | 
-                {row['luas']} Ha
-                """
-            )
+        # simpan ulang
+        simpan_data(df_baru.to_dict(orient="records"))
 
-        with col2:
-            if st.button("❌", key=f"hapus_{i}"):
+        st.success("Data berhasil dihapus")
 
-                data.pop(i)
+        st.rerun()
 
-                simpan_data(data)
+    # download csv
+    csv = df.drop(columns=["Hapus"]).to_csv(index=False).encode("utf-8")
 
-                st.success("Data berhasil dihapus")
+    st.download_button(
+        label="⬇ Download CSV",
+        data=csv,
+        file_name="laporan_pertanian.csv",
+        mime="text/csv"
+    )
 
-                st.rerun()
 
 else:
     st.info("Belum ada data")

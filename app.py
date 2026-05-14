@@ -3,6 +3,8 @@ import pandas as pd
 import json
 import os
 from datetime import date
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 FILE_DATA = "laporan.json"
 
@@ -130,3 +132,17 @@ if data:
 
 else:
     st.info("Belum ada data")
+
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/drive"
+]
+
+creds = ServiceAccountCredentials.from_json_keyfile_name(
+    "credential.json",
+    scope
+)
+
+client = gspread.authorize(creds)
+
+sheet = client.open("Laporan Pertanian").sheet1

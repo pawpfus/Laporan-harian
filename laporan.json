@@ -34,5 +34,25 @@
         "komoditas": "Padi",
         "luas": 0.8,
         "user": "Fachru"
+    },
+    {
+        "tanggal": "2026-05-14",
+        "desa": "Otting",
+        "kelompok_tani": "Massappa",
+        "jenis_LTT": "Oplah Rawa",
+        "kegiatan": "Tanam",
+        "komoditas": "Padi",
+        "luas": 0.9,
+        "user": "Fachru"
+    },
+    {
+        "tanggal": "2026-05-14",
+        "desa": "Otting",
+        "kelompok_tani": "Massappa",
+        "jenis_LTT": "Reguler",
+        "kegiatan": "Tanam",
+        "komoditas": "Padi",
+        "luas": 0.7,
+        "user": "Fachru"
     }
 ]

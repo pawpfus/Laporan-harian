@@ -115,6 +115,7 @@ if submit:
 
 # TAMPIL DATA
 
+# tampil data
 st.subheader("📋 Data Laporan")
 
 data = baca_data()
@@ -123,31 +124,39 @@ if data:
 
     df = pd.DataFrame(data)
 
-    st.dataframe(
-    df,
-    use_container_width=True
-)
+    st.dataframe(df, use_container_width=True)
 
-# HAPUS DATA SPESIFIK
+    st.divider()
 
-st.subheader("🗑 Hapus Data")
+    st.subheader("🗑 Hapus Data")
 
-hapus_index = st.number_input(
-    "Masukkan nomor index data yang ingin dihapus",
-    min_value=0,
-    max_value=len(df)-1,
-    step=1
-)
+    # tampil tiap data + tombol hapus
+    for i, row in df.iterrows():
 
-if st.button("Hapus Data Terpilih"):
+        col1, col2 = st.columns([8, 1])
 
-    data.pop(hapus_index)
+        with col1:
+            st.write(
+                f"""
+                **{i}** | 
+                {row['tanggal']} | 
+                {row['desa']} | 
+                {row['kelompok_tani']} | 
+                {row['kegiatan']} | 
+                {row['luas']} Ha
+                """
+            )
 
-    simpan_data(data)
+        with col2:
+            if st.button("❌", key=f"hapus_{i}"):
 
-    st.success("Data berhasil dihapus")
+                data.pop(i)
 
-    st.rerun()
+                simpan_data(data)
+
+                st.success("Data berhasil dihapus")
+
+                st.rerun()
 
 else:
     st.info("Belum ada data")

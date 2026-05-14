@@ -127,39 +127,12 @@ if data:
     # tambah kolom hapus
     df["Hapus"] = False
 
-    # editor tabel
-    edited_df = st.data_editor(
-        df,
-        use_container_width=True,
-        num_rows="dynamic"
-    )
-
     # tombol proses hapus
     if st.button("🗑 Hapus Data Terpilih"):
-
-        # ambil data yang tidak dicentang
-        df_baru = edited_df[edited_df["Hapus"] == False]
-
-        # hapus kolom bantu
-        df_baru = df_baru.drop(columns=["Hapus"])
-
-        # simpan ulang
-        simpan_data(df_baru.to_dict(orient="records"))
 
         st.success("Data berhasil dihapus")
 
         st.rerun()
-
-    # download csv
-    csv = df.drop(columns=["Hapus"]).to_csv(index=False).encode("utf-8")
-
-    st.download_button(
-        label="⬇ Download CSV",
-        data=csv,
-        file_name="laporan_pertanian.csv",
-        mime="text/csv"
-    )
-
 
 else:
     st.info("Belum ada data")

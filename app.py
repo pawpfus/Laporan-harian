@@ -117,46 +117,18 @@ if submit:
 
 st.subheader("📋 Data Laporan")
 
+st.subheader("📋 Data Laporan")
+
 data = baca_data()
 
 if data:
 
     df = pd.DataFrame(data)
 
-    # HEADER
-    header = st.columns([1,2,2,2,2,2,1])
-
-    header[0].write("No")
-    header[1].write("Tanggal")
-    header[2].write("Desa")
-    header[3].write("Poktan")
-    header[4].write("Kegiatan")
-    header[5].write("Luas")
-    header[6].write("Aksi")
-
-    st.divider()
-
-    # DATA
-    for i, row in df.iterrows():
-
-        col = st.columns([1,2,2,2,2,2,1])
-
-        col[0].write(i)
-        col[1].write(row["tanggal"])
-        col[2].write(row["desa"])
-        col[3].write(row["kelompok_tani"])
-        col[4].write(row["kegiatan"])
-        col[5].write(f"{row['luas']} Ha")
-
-        if col[6].button("🗑", key=f"hapus_{i}"):
-
-            data.pop(i)
-
-            simpan_data(data)
-
-            st.success("Data berhasil dihapus")
-
-            st.rerun()
+    st.dataframe(
+        df,
+        use_container_width=True
+    )
 
 else:
     st.info("Belum ada data")
